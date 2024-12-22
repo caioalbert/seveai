@@ -1,0 +1,31 @@
+{
+  "name": "restaurant-management-system",
+  "version": "1.0.0",
+  "description": "Sistema inovador de gerenciamento de restaurante",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build": " npm install && cd client && npm install && cd ../server && npm install && npm run start"
+  },
+  "keywords": [
+    "restaurante",
+    "gerenciamento",
+    "react",
+    "node"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.0.1",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "dependencies": {
+    "react-datepicker": "^7.5.0",
+    "recharts": "^2.15.0",
+    "socket.io-client": "^4.8.1",
+    "umzug": "^3.8.2"
+  }
+}
