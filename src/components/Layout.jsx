@@ -4,7 +4,6 @@ import {
   Menu, X, LogOut, Home, ClipboardList, ShoppingCart, Users, Settings, Utensils,
   Calendar, Package, BarChart as Chart, ChevronLeft, ChevronRight, Clipboard, Building2
 } from 'lucide-react';
-import { Button } from './ui';
 import logo from '../../public/logo.png';
 
 const Layout = () => {
@@ -25,6 +24,10 @@ const Layout = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
   };
@@ -33,6 +36,7 @@ const Layout = () => {
     <Link
       to={to}
       className="flex items-center p-3 hover:bg-gray-100 hover:text-black rounded-md transition-all"
+      onClick={closeMobileMenu}
     >
       <Icon className="w-5 h-5 mr-3" />
       {!isSidebarCollapsed && <span className="font-normal text-gray-700">{label}</span>}
@@ -44,62 +48,32 @@ const Layout = () => {
       {/* Sidebar */}
       <aside
         className={`${
-          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          isMobileMenuOpen ? 'translate-x-0 z-50' : '-translate-x-full'
         } md:translate-x-0 fixed md:relative ${
           isSidebarCollapsed ? 'w-20' : 'w-56'
-        } bg-white shadow-md transition-all duration-300 ease-in-out z-50 h-full flex flex-col`}
+        } bg-white shadow-md transition-all duration-300 ease-in-out h-full flex flex-col`}
       >
         <div className="p-4 border-b flex items-center justify-between">
           <img src={logo} alt="Logo" className={`${isSidebarCollapsed ? 'w-20' : 'w-30'} transition-all`} />
           <button onClick={toggleSidebar} className="hidden md:block">
             {isSidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </button>
+          <button onClick={toggleMobileMenu} className="md:hidden">
+            <X size={20} />
+          </button>
         </div>
         <nav className="mt-5 flex-1 space-y-2">
-          {['manager'].includes(userRole) && (
-            <NavLink to="/" icon={Home} label="Dashboard" />
-          )}
-
-          {['manager'].includes(userRole) && (
-            <NavLink to="/tables" icon={ClipboardList} label="Mesas" />
-          )}
-
-          {['manager', 'chef'].includes(userRole) && (
-            <NavLink to="/products" icon={ShoppingCart} label="Produtos" />
-          )}
-
-          {['manager'].includes(userRole) && (
-            <NavLink to="/inventory" icon={Package} label="Estoque" />
-          )}
-
-          {['manager'].includes(userRole) && (
-            <NavLink to="/waiters" icon={Users} label="Usuários" />
-          )}
-
-          {['chef', 'manager'].includes(userRole) && (
-            <NavLink to="/kitchen" icon={Utensils} label="Cozinha" />
-          )}
-
-          {['manager', 'waiter'].includes(userRole) && (
-            <NavLink to="/reservations" icon={Calendar} label="Reservas" />
-          )}
-
-          {['manager', 'waiter'].includes(userRole) && (
-            <NavLink to="/orders" icon={Clipboard} label="Pedidos" />
-          )}
-
-          {['manager'].includes(userRole) && (
-            <NavLink to="/finances" icon={Chart} label="Finanças" />
-          )}
-
-          {['manager'].includes(userRole) && (
-            <NavLink to="/settings" icon={Settings} label="Configurações" />
-          )}
-
-          {/* Apenas Admin vê essa opção */}
-          {userRole === 'admin' && (
-            <NavLink to="/restaurants" icon={Building2} label="Restaurantes" />
-          )}
+          {['manager'].includes(userRole) && <NavLink to="/" icon={Home} label="Dashboard" />}
+          {['manager'].includes(userRole) && <NavLink to="/tables" icon={ClipboardList} label="Mesas" />}
+          {['manager', 'chef'].includes(userRole) && <NavLink to="/products" icon={ShoppingCart} label="Produtos" />}
+          {['manager'].includes(userRole) && <NavLink to="/inventory" icon={Package} label="Estoque" />}
+          {['manager'].includes(userRole) && <NavLink to="/waiters" icon={Users} label="Usuários" />}
+          {['chef', 'manager'].includes(userRole) && <NavLink to="/kitchen" icon={Utensils} label="Cozinha" />}
+          {['manager', 'waiter'].includes(userRole) && <NavLink to="/reservations" icon={Calendar} label="Reservas" />}
+          {['manager', 'waiter'].includes(userRole) && <NavLink to="/orders" icon={Clipboard} label="Pedidos" />}
+          {['manager'].includes(userRole) && <NavLink to="/finances" icon={Chart} label="Finanças" />}
+          {['manager'].includes(userRole) && <NavLink to="/settings" icon={Settings} label="Configurações" />}
+          {userRole === 'admin' && <NavLink to="/restaurants" icon={Building2} label="Restaurantes" />}
         </nav>
         <div className="p-4">
           <button
